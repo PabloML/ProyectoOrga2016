@@ -1,6 +1,6 @@
 /**
  * TDA Pila.
- * @author Pablo Lencina, Marcelo Rodríguez, Leonardo E. Segovia
+ * @author Pablo Lencina, Federico Esteche
  * @version 1.2012.10.02
  */
 
@@ -90,5 +90,5 @@ int apilar (pila_t* pila,char* str)
  */
 int pila_vacia(pila_t* pila)
 {
-    return pila -> elemento == NULL;
+    return pila->elemento == NULL;
 }
