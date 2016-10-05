@@ -1,7 +1,6 @@
 /**
  * TDA Pila.
  * @author Pablo Lencina, Federico Esteche
- * @version 1.2012.10.02
  */
 
 typedef struct pila
