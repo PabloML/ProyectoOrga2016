@@ -2,6 +2,7 @@
  * TDA Pila.
  * @author Pablo Lencina, Federico Esteche
  */
+
 #include "pila.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,8 +70,8 @@ char* desapilar (pila_t* pila)
  * @param pila Puntero indirecto a la pila a examinar.
  * @param a Entero a insertar.
  * @return Código entero de error:
- *            0 (operación exitosa)
- *            1 (error desconocido)
+ *            EXITO (operación exitosa)
+ *            EXIT_FAILURE (error desconocido)
  */
 int apilar (pila_t* pila,char* str)
 {
