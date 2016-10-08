@@ -43,13 +43,13 @@ char* desapilar (pila_t* pila)
   char* element;
   /*Verifico si la pila fue inicializada*/
   if (pila==NULL)
-     exit(PIL_NO_INI);
+       exit(PIL_NO_INI);
   else {
          /* Realizar una copia de pila, para luego liberarlo*/
          pila_t backup = (*pila);
          /*Verifico si la pila esta vacia*/
-         if (backup == NULL)
-            exit(PIL_VACIA);
+         if (backup==NULL)
+             exit(PIL_VACIA);
          else {
                /*Paso 1. Solicitar el elemento residente en P.elem
                  Notar que es un doble puntero, así que hay que desreferenciar x2 */
@@ -77,7 +77,7 @@ int apilar (pila_t* pila,char* str)
 {
   /*Verifico si la pila fue inicializada*/
   if (pila==NULL)
-     exit(PIL_NO_INI);
+     return PIL_NO_INI;
   else {
          pila_t element = (pila_t)malloc(sizeof(pila_t));
          if (element != NULL)
@@ -85,12 +85,12 @@ int apilar (pila_t* pila,char* str)
              element->elemento = str;
              element->proximo_elemento = (*pila);
              (*pila) = element;
-         return EXITO;
-    }
-    else  /* Nuestro espacio de almacenamiento se agotó */
-         {
-           return EXIT_FAILURE;
-         }
+             return EXITO;
+            }
+         else /* Nuestro espacio de almacenamiento se agotó */
+             {
+              return EXIT_FAILURE;
+             }
        }
 }
 

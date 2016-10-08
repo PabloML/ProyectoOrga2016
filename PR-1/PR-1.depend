@@ -1,15 +1,17 @@
 # depslib dependency file v1.0
 1475882926 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
 
-1475887037 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
+1475921864 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
 	"pila.h"
 	<stdio.h>
 	<stdlib.h>
 
 1475882926 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
 
-1475887012 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.c
+1475921834 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.c
 	"pila.h"
 	<stdio.h>
 	<stdlib.h>
+
+1475888869 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
 
