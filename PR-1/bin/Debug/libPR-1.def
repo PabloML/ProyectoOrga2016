@@ -1,6 +1,0 @@
-EXPORTS
-    _Z10pila_crearv @1
-    _Z10pila_vaciaP4pila @2
-    _Z4topeP4pila @3
-    _Z6apilarP4pilaPc @4
-    _Z9desapilarP4pila @5
