@@ -10,7 +10,7 @@
 lista_t lista_crear(){
 
     lista_t nueva_lista=malloc(sizeof(lista_t));
-    nueva_lista->head=NULL;
+    nueva_lista->primera_celda=NULL;
     nueva_lista->cantidad_elementos=0;
     return nueva_lista;
 }
@@ -36,7 +36,7 @@ int lista_insertar(lista_t lista, unsigned int pos, int elem) {
         int i;
         celda_t *celda;
         if(lista->cantidad_elementos>0){
-            celda=lista->head;
+            celda=lista->primera_celda;
             for(i=0;i<numero_de_celda;i++){
                 if(celda->proxima_celda!=NULL)
                     celda=celda->proxima_celda;
@@ -49,7 +49,7 @@ int lista_insertar(lista_t lista, unsigned int pos, int elem) {
         }
         else{//la lista está vacía
             celda=(celda_t *)crearCelda();
-            lista->head=celda;
+            lista->primera_celda=celda;
 
         }
         //Agrego el elemento en la posicion.
@@ -102,7 +102,7 @@ int lista_obtener(lista_t lista, unsigned int pos){
     int to_return;
     celda_t *celda;
         if(lista->cantidad_elementos>0){
-            celda=lista->head;
+            celda=lista->primera_celda;
             for(i=0;i<numero_de_celda;i++){
                 if(celda->proxima_celda!=NULL)
                     celda=celda->proxima_celda;
@@ -132,8 +132,8 @@ int lista_adjuntar(lista_t lista, int elem){
  */
 
 void eliminar_celda(lista_t lista){
-    celda_t *primera_celda= lista->head;
-    lista->head= lista->head->proxima_celda; //asigno como head de la lista, al 2do nodo.
+    celda_t *primera_celda= lista->primera_celda;
+    lista->primera_celda= lista->primera_celda->proxima_celda; //asigno como head de la lista, al 2do nodo.
     free(primera_celda);
     lista->cantidad_elementos--;
 }

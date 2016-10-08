@@ -43,7 +43,7 @@ char* desapilar (pila_t* pila)
   char* element;
   /*Verifico si la pila fue inicializada*/
   if (pila==NULL)
-       exit(PIL_NO_INI);
+     exit(PIL_NO_INI);
   else {
          /* Realizar una copia de pila, para luego liberarlo*/
          pila_t backup = (*pila);
