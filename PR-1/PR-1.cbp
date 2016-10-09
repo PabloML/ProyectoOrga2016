@@ -34,6 +34,9 @@
 		<Unit filename="evaluar.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="lista.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="lista.h">
 			<Option compile="1" />
 		</Unit>

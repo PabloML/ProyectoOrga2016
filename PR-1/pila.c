@@ -17,7 +17,7 @@
  */
 pila_t pila_crear(void)
 {
-  return (pila_t)malloc(sizeof(pila_t));
+  return NULL;
 }
 
 /**
@@ -28,6 +28,8 @@ pila_t pila_crear(void)
  */
 char* tope (pila_t pila)
 {
+  if (pila==NULL)
+     exit(PIL_VACIA);
   return pila->elemento;
 }
 
