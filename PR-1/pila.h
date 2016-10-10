@@ -13,7 +13,7 @@ typedef struct pila
 
 /**
  * Crea y devuelve una pila nueva vacía.
- * @return Puntero a pila vacía, NULL si no se pudo crearla.
+ * @return Puntero a pila vacía.
  */
 pila_t pila_crear(void);
 

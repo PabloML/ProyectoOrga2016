@@ -13,7 +13,7 @@
 
 /**
  * Crea y devuelve una pila nueva vacía.
- * @return Puntero al espacio de memoria donde se ubicara la pila.
+ * @return Puntero a pila vacía.
  */
 pila_t pila_crear(void)
 {
@@ -29,7 +29,10 @@ pila_t pila_crear(void)
 char* tope (pila_t pila)
 {
   if (pila==NULL)
-     exit(PIL_VACIA);
+     {
+       printf("La pila esta vacia.");
+       exit(PIL_VACIA);
+     }
   return pila->elemento;
 }
 
@@ -45,13 +48,19 @@ char* desapilar (pila_t* pila)
   char* element;
   /*Verifico si la pila fue inicializada*/
   if (pila==NULL)
-     exit(PIL_NO_INI);
+     {
+       printf("La pila no ha sido inicializada");
+       exit(PIL_NO_INI);
+     }
   else {
          /* Realizar una copia de pila, para luego liberarlo*/
          pila_t backup = (*pila);
          /*Verifico si la pila esta vacia*/
          if (backup==NULL)
-             exit(PIL_VACIA);
+            {
+              printf("La pila esta vacia.");
+              exit(PIL_VACIA);
+            }
          else {
                /*Paso 1. Solicitar el elemento residente en P.elem
                  Notar que es un doble puntero, así que hay que desreferenciar x2 */
@@ -79,7 +88,10 @@ int apilar (pila_t* pila,char* str)
 {
   /*Verifico si la pila fue inicializada*/
   if (pila==NULL)
-     return PIL_NO_INI;
+     {
+       printf("La pila no ha sido inicializada");
+       exit(PIL_NO_INI);
+     }
   else {
          pila_t element = (pila_t)malloc(sizeof(pila_t));
          if (element != NULL)

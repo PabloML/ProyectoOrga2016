@@ -1,5 +1,5 @@
 /**
- * TDA Pila.
+ * TDA Lista.
  * @author Pablo Lencina, Federico Esteche
  */
 
@@ -67,12 +67,13 @@ int lista_insertar(lista_t lista, unsigned int pos, int elem) {
     intermedias.
     Retorna verdadero si procede con éxito, falso en caso contrario.
     Si la posición no es válida,aborta con exit status LST_POS_INV.
+  */
 int lista_eliminar(lista_t lista, unsigned int pos) {
-    int numero_de_celda=pos/4; //El numero de celda que contiene la posicion a eliminar.
+    /*int numero_de_celda=pos/4; //El numero de celda que contiene la posicion a eliminar.
     int pos_eliminar=pos%4;
 
     int i;
-    celda_t *celda=lista->head;
+    celda_t *celda=lista->primera_celda;
         for(i=0;i<numero_de_celda;i++){
             celda=celda->proxima_celda;
         }
@@ -81,8 +82,9 @@ int lista_eliminar(lista_t lista, unsigned int pos) {
 
 
 
-      }
-    }*/
+      }*/
+      return pos;
+    }
 
 /**Retorna la cantidad de elementos de la lista. Si la lista no está inicializada, el programa aborta
    con exit status LST_NO_INI.*/

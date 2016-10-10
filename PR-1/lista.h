@@ -1,7 +1,7 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 /**
- * TDA Pila.
+ * TDA Lista.
  * @author Pablo Lencina, Federico Esteche
  */
 
