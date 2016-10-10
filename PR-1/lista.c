@@ -189,7 +189,7 @@ int lista_obtener(lista_t lista, unsigned int pos){
             to_return=arreglo[pos_en_arreglo];
         }
         else
-            return 4;
+            exit(LST_POS_INV);
     return to_return;
     }
 /**Inserta el elemento elem en la última posición de la lista.
