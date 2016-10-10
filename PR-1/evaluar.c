@@ -306,7 +306,7 @@ int operacion (pila_t* pila)
   return n;
 }
 
-/*int main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
   char* s;
   int n=0;
@@ -328,9 +328,8 @@ int operacion (pila_t* pila)
             }
        }
   printf("Ingrese la operacion que quiere realizar: ");
-  scanf("%s",&s);
   scanf("%[^\n]",&s);
- //Apilo la expresión.
+/* //Apilo la expresión.
   char* c=s-n;
   while (strcmp(&c,"\0")!=0)
     {
@@ -338,7 +337,7 @@ int operacion (pila_t* pila)
       n++;
       c=s+n;
     }
-  if (pila_vacia(pila)==0)
+ /* //if (pila_vacia(pila)==0)
      {
       s=desapilar(&pila);
       if (strcmp(s,")")!=0)
@@ -412,5 +411,5 @@ int operacion (pila_t* pila)
          printf("Expresión mal formada");
          exit(EXP_MALF);
        }
-  return 0;
-}*/
+  return 0;*/
+}
