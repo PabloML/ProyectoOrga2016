@@ -1,24 +1,32 @@
 # depslib dependency file v1.0
-1475882926 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
+1476028157 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
 
-1475977066 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
+1476101627 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
+	"pila.h"
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1476028157 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
+
+1476038569 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.c
 	"pila.h"
 	<stdio.h>
 	<stdlib.h>
 
-1475882926 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
+1476036105 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
 
-1475977118 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.c
-	"pila.h"
-	<stdio.h>
-	<stdlib.h>
-
-1475888869 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
-
-1475923841 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.c
+1476067863 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 
-1475888869 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
+1476036105 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
+
+1476101436 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\testerlista.c
+	"pila.h"
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
 

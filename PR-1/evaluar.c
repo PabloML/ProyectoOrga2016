@@ -33,7 +33,8 @@ int suma(lista_t operandos)
   else { //Realizo la operación vacando los operandos de la lista.
          while (lista_cantidad(operandos)>0)
          {
-           int op=lista_eliminar(operandos,0);
+           int op=lista_obtener(operandos,0);
+           lista_eliminar(operandos,0);
            s=s+op;
          }
        }
@@ -60,8 +61,10 @@ int resta(lista_t operandos)
             exit(OPND_DEMAS);
           }
        else { //Realizo la operación vaciando la lista de operandos.
-              int op1=lista_eliminar(operandos,0);
-              int op2=lista_eliminar(operandos,0);
+              int op1=lista_obtener(operandos,0);
+              lista_eliminar(operandos,0);
+              int op2=lista_obtener(operandos,0);
+              lista_eliminar(operandos,0);
               r=op1-op2;
             }
   return r;
@@ -84,7 +87,8 @@ int producto(lista_t operandos)
   else { //Realizo la operación vacando los operandos de la lista.
          while (lista_cantidad(operandos)>0)
          {
-           int op=lista_eliminar(operandos,0);
+           int op=lista_obtener(operandos,0);
+           lista_eliminar(operandos,0);
            p=p*op;
          }
        }
@@ -111,8 +115,10 @@ int division(lista_t operandos)
             exit(OPND_DEMAS);
           }
        else { //Realizo la operación vaciando la lista de operandos.
-              int op1=lista_eliminar(operandos,0);
-              int op2=lista_eliminar(operandos,0);
+              int op1=lista_obtener(operandos,0);
+              lista_eliminar(operandos,0);
+              int op2=lista_obtener(operandos,0);
+              lista_eliminar(operandos,0);
               d=op1/op2;
             }
   return d;
@@ -126,7 +132,7 @@ int division(lista_t operandos)
 int esNumero(char* c)
 {
   int value=0;
-  if ((strcmp(c,"0")==0) || (strcmp(c,"1")==0) || (strcmp(c,"2")==0) || (strcmp(c,"3")==0) || (strcmp(c,"4")==0) || (strcmp(c,"5")==0) || (strcmp(c,"6")==0) || (strcmp(c,"7")==0) || (strcmp(c,"8")==0) || (strcmp(c,"9")==0))
+  if ((strcmp(&c,"0")==0) || (strcmp(&c,"1")==0) || (strcmp(&c,"2")==0) || (strcmp(&c,"3")==0) || (strcmp(&c,"4")==0) || (strcmp(&c,"5")==0) || (strcmp(&c,"6")==0) || (strcmp(&c,"7")==0) || (strcmp(&c,"8")==0) || (strcmp(&c,"9")==0))
      value=1;
   return value;
 }
@@ -138,7 +144,7 @@ int esNumero(char* c)
 int esOperador(char* c)
 {
   int value=0;
-  if ((strcmp(c,"+")==0) || (strcmp(c,"-")==0) || (strcmp(c,"*"))==0 || (strcmp(c,"/")==0))
+  if ((strcmp(&c,"+")==0) || (strcmp(&c,"-")==0) || (strcmp(&c,"*"))==0 || (strcmp(&c,"/")==0))
      value=1;
   return value;
 }
@@ -156,7 +162,7 @@ int capturarNumero(pila_t* pila,int n)
       {char* s=desapilar(pila);
        while (esNumero(s)!=0)
        {
-         m=atoi(s);
+         m=atoi(&s);
          if (m<0)
             {
               printf("El operando es invalido.");
@@ -187,7 +193,7 @@ void consumirParentesis(pila_t* pila, pila_t* p)
   if (pila_vacia(*pila)==0)
      {
        s=desapilar(pila);
-       while (strcmp(s,")")==0)
+       while (strcmp(&s,")")==0)
        {
          apilar(p,s);
          if (pila_vacia(*pila)==0)
@@ -211,7 +217,7 @@ void cerrarParentesis(pila_t* pila,pila_t* p)
   if (pila_vacia(*pila)==0)
      {
        s=desapilar(pila);
-       while (strcmp(s,"(")==0)
+       while (strcmp(&s,"(")==0)
        {
          if (pila_vacia(*p)==0)
             {
@@ -252,7 +258,7 @@ int operacion (pila_t* pila)
         s=desapilar(pila);
         while (esNumero(s)!=0 || strcmp(s," ")==0)
         {
-          while (strcmp(s," ")==0)
+          while (strcmp(&s," ")==0)
           {
              if (pila_vacia(*pila)==0)
                 desapilar(pila);
@@ -263,7 +269,7 @@ int operacion (pila_t* pila)
           }
           if (esNumero(s)!=0)
              {
-               m=atoi(s);
+               m=atoi(&s);
                if (m<0)
                   {
                     printf("El operando es invalido.");
@@ -278,13 +284,13 @@ int operacion (pila_t* pila)
         if (pila_vacia(*pila)==0)
            {
             s=desapilar(pila);
-            if (strcmp(s,"+")==0)
+            if (strcmp(&s,"+")==0)
                n=suma(operandos);
-            else if (strcmp(s,"-")==0)
+            else if (strcmp(&s,"-")==0)
                     n=resta(operandos);
-                 else if (strcmp(s,"*")==0)
+                 else if (strcmp(&s,"*")==0)
                          n=producto(operandos);
-                      else if (strcmp(s,"/")==0)
+                      else if (strcmp(&s,"/")==0)
                               n=division(operandos);
             apilar(pila,s);
            }
@@ -321,13 +327,15 @@ int main(int argc, char* argv[])
              printf("El programa opera las operaciones aritméticas suma, resta, división y multiplicación (+, −, /, ∗):\n *Los operandos son números enteros sin signo, de uno o más dígitos.\n *Los operadores + y * pueden recibir dos o más operandos.\n *Las expresiones se interpretan en preorden.\n \n");
             }
        }
-  printf("Ingrese la operación que quiere realizar: ");
+  printf("Ingrese la operacion que quiere realizar: ");
   scanf("%[^\n]",&s);
   //Apilo la expresión.
-  while (strcmp((s+n),"\0")!=0)
+  char* c=s+n;
+  while (strcmp(&c,"\0")!=0)
     {
       apilar(&pila,s+n);
       n++;
+      c=s+n;
     }
   if (pila_vacia(pila)==0)
     {
@@ -342,7 +350,7 @@ int main(int argc, char* argv[])
             apilar(&p,s);
             consumirParentesis(&pila,&p);
             //Verifico que el operando sea valido.
-            if (esNumero(s)==0 && strcmp(s," ")!=0)
+            if (esNumero(&s)==0 && strcmp(&s," ")!=0)
                {
                  printf("El operando es invalido.");
                  exit(OPND_INV);
@@ -356,7 +364,7 @@ int main(int argc, char* argv[])
                       if (pila_vacia(pila)==0)
                          {
                            s=desapilar(&pila);
-                           if (strcmp(s,")")==0)
+                           if (strcmp(&s,")")==0)
                               {
                                 consumirParentesis(&pila,&p);
                                 n=operacion(&pila);
@@ -365,13 +373,13 @@ int main(int argc, char* argv[])
                                 if (pila_vacia(pila)==0)
                                    {
                                      s=desapilar(&pila);
-                                     if (strcmp(s,"+")==0)
+                                     if (strcmp(&s,"+")==0)
                                         n=suma(operandos);
-                                     else if (strcmp(s,"-")==0)
+                                     else if (strcmp(&s,"-")==0)
                                              n=resta(operandos);
-                                          else if (strcmp(s,"*")==0)
+                                          else if (strcmp(&s,"*")==0)
                                                   n=producto(operandos);
-                                               else if (strcmp(s,"/")==0)
+                                               else if (strcmp(&s,"/")==0)
                                                        n=division(operandos);
                                                     else {
                                                            printf("El operador es invalido.");
