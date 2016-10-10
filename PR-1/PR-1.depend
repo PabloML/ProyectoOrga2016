@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1476028157 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\pila.h
 
-1476101627 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
+1476105028 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\evaluar.c
 	"pila.h"
 	"lista.h"
 	<stdio.h>
@@ -17,14 +17,14 @@
 
 1476036105 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
 
-1476067863 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.c
+1476112594 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 
 1476036105 c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\lista.h
 
-1476101436 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\testerlista.c
+1476106714 source:c:\users\flia. lencina\documents\programas pablo\organización de las computadoras\cursada 2016\proyectoorga2016\pr-1\testerlista.c
 	"pila.h"
 	"lista.h"
 	<stdio.h>

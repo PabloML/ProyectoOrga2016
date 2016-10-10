@@ -200,7 +200,7 @@ int lista_adjuntar(lista_t lista, int elem){
         to_return= 3;
         }
     else{
-         int pos_de_insercion=lista->cantidad_elementos+1;
+         int pos_de_insercion=lista->cantidad_elementos;
          to_return=lista_insertar(lista,pos_de_insercion,elem);
          }
     return to_return;
