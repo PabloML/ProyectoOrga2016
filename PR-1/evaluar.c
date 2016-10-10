@@ -21,19 +21,19 @@
  *@param operandos Lista de operandos a sumar.
  * @return Devuelve el resultado de la suma.
  */
-int suma(lista_t* operandos)
+int suma(lista_t operandos)
 {
   int s=0;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(*operandos)<2)
+  if (lista_cantidad(operandos)<2)
      {
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
   else { //Realizo la operación vacando los operandos de la lista.
-         while (lista_cantidad(*operandos)>0)
+         while (lista_cantidad(operandos)>0)
          {
-           int op=lista_eliminar(*operandos,0);
+           int op=lista_eliminar(operandos,0);
            s=s+op;
          }
        }
@@ -45,23 +45,23 @@ int suma(lista_t* operandos)
  *@param operandos Lista de operandos a restar.
  * @return Devuelve el resultado de la resta.
  */
-int resta(lista_t* operandos)
+int resta(lista_t operandos)
 {
   int r=0;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(*operandos)<2)
+  if (lista_cantidad(operandos)<2)
      {
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
-  else if (lista_cantidad(*operandos)>2)
+  else if (lista_cantidad(operandos)>2)
           {
             printf("La cantidad de operadores es mayor a 2.");
             exit(OPND_DEMAS);
           }
        else { //Realizo la operación vaciando la lista de operandos.
-              int op1=lista_eliminar(*operandos,0);
-              int op2=lista_eliminar(*operandos,0);
+              int op1=lista_eliminar(operandos,0);
+              int op2=lista_eliminar(operandos,0);
               r=op1-op2;
             }
   return r;
@@ -72,19 +72,19 @@ int resta(lista_t* operandos)
  *@param operandos Lista de operandos a multiplicar.
   * @return Devuelve el resultado del producto.
  */
-int producto(lista_t* operandos)
+int producto(lista_t operandos)
 {
   int p=1;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(*operandos)<2)
+  if (lista_cantidad(operandos)<2)
      {
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
   else { //Realizo la operación vacando los operandos de la lista.
-         while (lista_cantidad(*operandos)>0)
+         while (lista_cantidad(operandos)>0)
          {
-           int op=lista_eliminar(*operandos,0);
+           int op=lista_eliminar(operandos,0);
            p=p*op;
          }
        }
@@ -96,23 +96,23 @@ int producto(lista_t* operandos)
  *@param operandos Lista de operandos a dividir.
  * @return Devuelve el resultado de la división.
  */
-int division(lista_t* operandos)
+int division(lista_t operandos)
 {
   int d=0;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(*operandos)<2)
+  if (lista_cantidad(operandos)<2)
      {
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
-  else if (lista_cantidad(*operandos)>2)
+  else if (lista_cantidad(operandos)>2)
           {
             printf("La cantidad de operadores es mayor a 2.");
             exit(OPND_DEMAS);
           }
        else { //Realizo la operación vaciando la lista de operandos.
-              int op1=lista_eliminar(*operandos,0);
-              int op2=lista_eliminar(*operandos,0);
+              int op1=lista_eliminar(operandos,0);
+              int op2=lista_eliminar(operandos,0);
               d=op1/op2;
             }
   return d;
@@ -279,13 +279,13 @@ int operacion (pila_t* pila)
            {
             s=desapilar(pila);
             if (strcmp(s,"+")==0)
-               n=suma(&operandos);
+               n=suma(operandos);
             else if (strcmp(s,"-")==0)
-                    n=resta(&operandos);
+                    n=resta(operandos);
                  else if (strcmp(s,"*")==0)
-                         n=producto(&operandos);
+                         n=producto(operandos);
                       else if (strcmp(s,"/")==0)
-                              n=division(&operandos);
+                              n=division(operandos);
             apilar(pila,s);
            }
         else {
@@ -366,13 +366,13 @@ int main(int argc, char* argv[])
                                    {
                                      s=desapilar(&pila);
                                      if (strcmp(s,"+")==0)
-                                        n=suma(&operandos);
+                                        n=suma(operandos);
                                      else if (strcmp(s,"-")==0)
-                                             n=resta(&operandos);
+                                             n=resta(operandos);
                                           else if (strcmp(s,"*")==0)
-                                                  n=producto(&operandos);
+                                                  n=producto(operandos);
                                                else if (strcmp(s,"/")==0)
-                                                       n=division(&operandos);
+                                                       n=division(operandos);
                                                     else {
                                                            printf("El operador es invalido.");
                                                            exit(OPRD_INV);
