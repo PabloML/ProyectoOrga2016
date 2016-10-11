@@ -17,7 +17,8 @@
  */
 pila_t pila_crear(void)
 {
-  return NULL;
+  pila_t p=NULL;
+  return p;
 }
 
 /**
@@ -96,7 +97,8 @@ int apilar (pila_t* pila,char* str)
          pila_t element = (pila_t)malloc(sizeof(pila_t));
          if (element != NULL)
             {
-             element->elemento = str;
+             //element->elemento = (char*) malloc(sizeof(char)*strlen(str));
+             element->elemento=str;
              element->proximo_elemento = (*pila);
              (*pila) = element;
              return EXITO;

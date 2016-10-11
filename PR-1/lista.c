@@ -189,21 +189,20 @@ int lista_obtener(lista_t lista, unsigned int pos){
             to_return=arreglo[pos_en_arreglo];
         }
         else
-            exit(LST_POS_INV);
+            return 4;
     return to_return;
     }
 /**Inserta el elemento elem en la última posición de la lista.
    Si la lista no está inicializada, aborta con exit status LST_NO_INI.*/
 int lista_adjuntar(lista_t lista, int elem){
-    int to_return=0;
     if (lista==NULL){
-        to_return= 3;
+        exit(LST_NO_INI);
         }
     else{
          int pos_de_insercion=lista->cantidad_elementos;
-         to_return=lista_insertar(lista,pos_de_insercion,elem);
+         lista_insertar(lista,pos_de_insercion,elem);
          }
-    return to_return;
+    return VERDADERO;
     }
 
 /** Elimina el primer nodo de la lista recibida como parámetro

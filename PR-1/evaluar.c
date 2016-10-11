@@ -2,11 +2,13 @@
  * Programa Principal.
  * @author Pablo Lencina, Federico Esteche
  */
-#include "pila.h"
-#include "lista.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "pila.h"
+#include "lista.h"
 
 #define EXITO EXIT_SUCCESS
 #define EXP_MALF 2
@@ -15,6 +17,45 @@
 #define OPND_INV 7
 #define OPRD_INV 8
 #define PIL_VACIA 10
+
+int evaluar_expresion(char* str);
+void calcular(pila_t* pOperandos,lista_t operandos,char* operador);
+
+
+
+const char* help = "\nEvaluar 1.0\n"
+             "Es un evaluador de las expresiones aritméticas suma, resta, división y multiplicación (+, −, /, ∗),Las expresiones aritméticas utilizan la siguiente sintaxis:\n"
+             " (< operador > < operando 1 > < operando 2 > . . . < operando n >)\n"
+             " Donde:\n"
+             "      1)Los operadores, paréntesis y operandos están separados por cualquier número de espacios en blanco.\n"
+             "      2)Los operandos son números enteros sin signo, de uno o más dígitos.\n"
+             "      3)Los operadores + y * pueden recibir dos o más operandos.\n"
+             "      4)Las expresiones se interpretan en preorden. \n"
+             "Algunos ejemplos de expresiones válidas son:\n"
+             "La expresión ( + ( / 51 37 ) 6 ) se interpreta como 51 / 37 + 6.\n"
+             "La expresión (∗ (+ 9 12 3) 4 5 (− 3 2)) se interpreta como (9 + 12 + 3) ∗ 4 ∗ 5 ∗ (3 − 2)\n"
+             "Algunos ejemplos de expresiones inválidas son:\n"
+             "La expresión + ( / 51 37 ) 6 ) -> No respeta la sintaxis, debe comenzar con un (\n"
+             "La expresión ( ++ ( / 51 31 37 ) 6 ) -> No respeta el inciso 2.\n"
+             "ERRORES: \n"
+             "            a) Si alguno de los operadores no corresponde a un operador válido, muestra un\n"
+             "               error y finaliza la ejecución con exit status OPRD_INV.\n"
+             "            b) Si la cantidad de operandos es insuficiente para aplicar el operador, muestra\n"
+             "               un error y abortar con exit status OPND_INSUF.\n"
+             "            c) Si el operador es / o -, y la cantidad de operadores es > 2, muesta un error,\n"
+             "               y aborta con exit status OPND_DEMAS.\n"
+             "            d) Si alguno de los operandos no corresponde a un número entero válido, muestra\n"
+             "               nun error, y termina con exit status OPND_INV.\n"
+             "            e) Si al evaluar la expresión no se encuentra un símbolo (, muestra un error y\n"
+             "               termina con exit status EXP_MALF.\n"
+             "            f) Si al evaluar la expresión, se encuentra que un ( o ) no cuenta con su correspondiente\n"
+             "               ) o (, muestra un error y termina con exit status EXP_MALF.\n"
+             "            g) Si hay un único elemento en la expresión, y es un entero, muestra el resultado\n"
+             "               y terminar con exit status EXITO. Si el elemento no es un entero, termina con\n"
+             "               exit status OPND_INV.;\n";
+
+
+
 
 /**
  * Realiza la suma de los operandos de la lista pasada por parámetro.
@@ -46,17 +87,14 @@ int suma(lista_t operandos)
  *@param operandos Lista de operandos a restar.
  * @return Devuelve el resultado de la resta.
  */
-int resta(lista_t operandos)
-{
+int resta(lista_t operandos){
   int r=0;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(operandos)<2)
-     {
+  if (lista_cantidad(operandos)<2){
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
-  else if (lista_cantidad(operandos)>2)
-          {
+  else if (lista_cantidad(operandos)>2){
             printf("La cantidad de operadores es mayor a 2.");
             exit(OPND_DEMAS);
           }
@@ -65,18 +103,17 @@ int resta(lista_t operandos)
               lista_eliminar(operandos,0);
               int op2=lista_obtener(operandos,0);
               lista_eliminar(operandos,0);
-              r=op1-op2;
+              r=op2-op1;
             }
   return r;
 }
 
 /**
  * Realiza el producto de los operandos de la lista pasada por parámetro.
- *@param operandos Lista de operandos a multiplicar.
-  * @return Devuelve el resultado del producto.
+ * @param operandos Lista de operandos a multiplicar.
+ * @return Devuelve el resultado del producto.
  */
-int producto(lista_t operandos)
-{
+int producto(lista_t operandos){
   int p=1;
   //Verifico si tiene la cantidad de operando para operar.
   if (lista_cantidad(operandos)<2)
@@ -97,20 +134,17 @@ int producto(lista_t operandos)
 
 /**
  * Realiza la división de los operandos de la lista pasada por parámetro.
- *@param operandos Lista de operandos a dividir.
+ * @param operandos Lista de operandos a dividir.
  * @return Devuelve el resultado de la división.
  */
-int division(lista_t operandos)
-{
+int division(lista_t operandos){
   int d=0;
   //Verifico si tiene la cantidad de operando para operar.
-  if (lista_cantidad(operandos)<2)
-     {
+  if (lista_cantidad(operandos)<2){
        printf("La cantidad de operandos es insuficiente para aplicar el operador.");
        exit(OPND_INSUF);
      }
-  else if (lista_cantidad(operandos)>2)
-          {
+  else if (lista_cantidad(operandos)>2){
             printf("La cantidad de operadores es mayor a 2.");
             exit(OPND_DEMAS);
           }
@@ -119,297 +153,222 @@ int division(lista_t operandos)
               lista_eliminar(operandos,0);
               int op2=lista_obtener(operandos,0);
               lista_eliminar(operandos,0);
-              d=op1/op2;
+              d=op2/op1;
             }
   return d;
 }
 
 /**
- * Verifica si el string pasado por parametro es un número.
- * @param c Puntero al caracter que quiero conocer si es un entero.
-  * @return Devuelve 1 si es verdadero, 0 si es falso.
+ * Verifica si el string pasado por parametro es un número entero.
+ * @param c Puntero al caracter a evaluar.
+ * @return retorna 1 si el caracter es un entero, 0 si en caso contrario.
  */
-int esNumero(char* c)
-{
+int esNumero(char c){
   int value=0;
-  if ((strcmp(&c,"0")==0) || (strcmp(&c,"1")==0) || (strcmp(&c,"2")==0) || (strcmp(&c,"3")==0) || (strcmp(&c,"4")==0) || (strcmp(&c,"5")==0) || (strcmp(&c,"6")==0) || (strcmp(&c,"7")==0) || (strcmp(&c,"8")==0) || (strcmp(&c,"9")==0))
+  if ((c=='0') || (c=='1') || (c=='2') || (c=='3') || (c=='4') || (c=='5')
+               || (c=='6') || (c=='7') || (c=='8') || (c=='9'))
      value=1;
   return value;
 }
 /**
- * Ve si es un operador el caracter pasada por parametro.
- * @param c Puntero al caracter que quiero conocer si es un operador.
- * @return Devuelve 1 si es verdadero, 0 si es falso.
+ * Evalua si el caracter c es un operador.
+ * @param c Puntero al caracter a evaluar.
+ * @return Devuelve 1 si es el caractec c es un operador, 0 en caso contrario.
  */
-int esOperador(char* c)
-{
+int esOperador(char c){
   int value=0;
-  if ((strcmp(&c,"+")==0) || (strcmp(&c,"-")==0) || (strcmp(&c,"*"))==0 || (strcmp(&c,"/")==0))
+  if ((c=='+') || (c=='-') || (c=='*') || (c=='/'))
      value=1;
   return value;
 }
 
 /**
- * Arma el número para operar.
- * @param pila Puntero a la pila donde esta la expresión.
- * @param n Digito inicial del número.
- * @return Retorna el número capturado.
+ * MEOTODO AUXILIAR OJO!!!
  */
-int capturarNumero(pila_t* pila,int n)
-{
-   int m;
-   if (pila_vacia(*pila)==0)
-      {char* s=desapilar(pila);
-       while (esNumero(s)!=0)
-       {
-         m=atoi(&s);
-         if (m<0)
-            {
-              printf("El operando es invalido.");
-              exit(OPND_INV);
-            }
-         else {
-                n=n + m*10;
-                s=desapilar(pila);
-              }
-       }
-       apilar(pila,s);
-      }
-   else {
-          printf("Pila vacia.");
-          exit(PIL_VACIA);
-        }
-   return n;
-}
 
-/**
- * Consume los parentesis apilandolos en una pila.
- * @param pila Puntero a la pila a la que le quiero consumir los parentesis.
- * @param p Puntero a la pila donde apilo los parentesis que consumo.
- */
-void consumirParentesis(pila_t* pila, pila_t* p)
-{
-  char* s;
-  if (pila_vacia(*pila)==0)
-     {
-       s=desapilar(pila);
-       while (strcmp(&s,")")==0)
-       {
-         apilar(p,s);
-         if (pila_vacia(*pila)==0)
-            s=desapilar(pila);
-         else {
-                printf("Expresión mal formada, falta o exceso de “( )”.");
-                exit(EXP_MALF);
-              }
-       }
-      apilar(pila,s);
-     }
-  else {
-         printf("Pila vacia.");
-         exit(PIL_VACIA);
-       }
-}
-
-void cerrarParentesis(pila_t* pila,pila_t* p)
-{
-  char* s;
-  if (pila_vacia(*pila)==0)
-     {
-       s=desapilar(pila);
-       while (strcmp(&s,"(")==0)
-       {
-         if (pila_vacia(*p)==0)
-            {
-              desapilar(p);
-              if (pila_vacia(*pila)==0)
-                 s=desapilar(pila);
-              else if (pila_vacia(*p)==0)
-                      {
-                       printf("Expresión mal formada, falta o exceso de “( )”.");
-                       exit(EXP_MALF);
-                      }
-            }
-         else {
-                printf("Expresión mal formada, falta o exceso de “( )”.");
-                exit(EXP_MALF);
-              }
-       }
-       apilar(pila,s);
-     }
-  else {
-         printf("Pila vacia.");
-         exit(PIL_VACIA);
-        }
-}
-
-/**
- * Realiza una operación apilada en una pila en preorden sin parentesis.
- * @param Puntero a la pila que contienen los operandos y operadores de la operación.
- */
-int operacion (pila_t* pila)
-{
-   lista_t operandos =lista_crear();
-   int n=0;
-   int m;
-   char* s;
-   if (pila_vacia(*pila)==0)
-      {
-        s=desapilar(pila);
-        while (esNumero(s)!=0 || strcmp(s," ")==0)
-        {
-          while (strcmp(&s," ")==0)
-          {
-             if (pila_vacia(*pila)==0)
-                desapilar(pila);
-             else {
-                   printf("Expresión mal formada");
-                   exit(EXP_MALF);
-                  }
-          }
-          if (esNumero(s)!=0)
-             {
-               m=atoi(&s);
-               if (m<0)
-                  {
-                    printf("El operando es invalido.");
-                    exit(OPND_INV);
-                  }
-               else {
-                      n=capturarNumero(pila,m);
-                      lista_adjuntar(operandos,n);
-                    }
-             }
-        }
-        if (pila_vacia(*pila)==0)
-           {
-            s=desapilar(pila);
-            if (strcmp(&s,"+")==0)
-               n=suma(operandos);
-            else if (strcmp(&s,"-")==0)
-                    n=resta(operandos);
-                 else if (strcmp(&s,"*")==0)
-                         n=producto(operandos);
-                      else if (strcmp(&s,"/")==0)
-                              n=division(operandos);
-            apilar(pila,s);
-           }
-        else {
-              printf("Expresión mal formada");
-              exit(EXP_MALF);
-             }
-      }
-   else {
-         printf("Pila vacia.");
-         exit(PIL_VACIA);
-        }
-  return n;
-}
-
-int main(int argc, char* argv[])
-{
-  char* s;
-  int n=0;
-  pila_t pila=pila_crear();
-  pila_t p=pila_crear();
+void evaluar(){
+ char* s;
+  s=(char*)malloc(sizeof(char)*256);
+  pila_t pOperadores=pila_crear();
+  pila_t pOperandos=pila_crear();
   lista_t operandos=lista_crear();
-  //Me fijo si la llamada a la función tiene el parametro que solicita la ayuda.
-  if (argc>1 && (strcmp(argv[1],"-h")==0))
-     {
-       //Me fijo que no tenga parametros erroneos.
-       if (argc>2)
-          printf("La cantidad de parametrops es erronea.");
-       printf("El programa opera las operaciones aritméticas suma, resta, división y multiplicación (+, −, /, ∗):\n *Los operandos son números enteros sin signo, de uno o más dígitos.\n *Los operadores + y * pueden recibir dos o más operandos.\n *Las expresiones se interpretan en preorden.\n \n");
-     }
-  else { //Me fijo que no tenga parametros erroneos.
-         if (argc>1)
-            {printf("Los parametros son erroneos");
-             printf("El programa opera las operaciones aritméticas suma, resta, división y multiplicación (+, −, /, ∗):\n *Los operandos son números enteros sin signo, de uno o más dígitos.\n *Los operadores + y * pueden recibir dos o más operandos.\n *Las expresiones se interpretan en preorden.\n \n");
-            }
-       }
-  printf("Ingrese la operacion que quiere realizar: ");
-  scanf("%[^\n]",&s);
-/* //Apilo la expresión.
-  char* c=s-n;
-  while (strcmp(&c,"\0")!=0)
-    {
-      apilar(&pila,s+n);
-      n++;
-      c=s+n;
-    }
- /* //if (pila_vacia(pila)==0)
-     {
-      s=desapilar(&pila);
-      if (strcmp(s,")")!=0)
-         {
-          printf("Expresión mal formada, falta o exceso de “( )”.");
-          exit(EXP_MALF);
-         }
-      else {
-            //Apilo los paretesis para luego controlar que tengan su contraparte.
-            apilar(&p,s);
-            consumirParentesis(&pila,&p);
-            //Verifico que el operando sea valido.
-            if (esNumero(&s)==0 && strcmp(&s," ")!=0)
-               {
-                 printf("El operando es invalido.");
-                 exit(OPND_INV);
-               }
-            else {
-                   while (pila_vacia(p)==0)
-                     {
-                      apilar(&pila,s);
-                      n=operacion(&pila);
-                      lista_adjuntar(operandos,n);
-                      if (pila_vacia(pila)==0)
-                         {
-                           s=desapilar(&pila);
-                           if (strcmp(&s,")")==0)
-                              {
-                                consumirParentesis(&pila,&p);
-                                n=operacion(&pila);
-                                lista_adjuntar(operandos,n);
-                                cerrarParentesis(&pila,&p);
-                                if (pila_vacia(pila)==0)
-                                   {
-                                     s=desapilar(&pila);
-                                     if (strcmp(&s,"+")==0)
-                                        n=suma(operandos);
-                                     else if (strcmp(&s,"-")==0)
-                                             n=resta(operandos);
-                                          else if (strcmp(&s,"*")==0)
-                                                  n=producto(operandos);
-                                               else if (strcmp(&s,"/")==0)
-                                                       n=division(operandos);
-                                                    else {
-                                                           printf("El operador es invalido.");
-                                                           exit(OPRD_INV);
-                                                         }
-                                   }
-                                else {
-                                       printf("Expresión mal formada");
-                                       exit(EXP_MALF);
-                                     }
 
-                              }
-                           else {
-                                  printf("El operador es invalido.");
-                                  exit(OPRD_INV);
-                                }
-                         }
-                      else {
-                             printf("Expresión mal formada");
-                             exit(EXP_MALF);
-                           }
-                     }
-                   printf("El resultado de la operación es %i: ",n);
-                   exit(EXITO);
-                 }
-           }
+  printf("Ingrese la operacion que quiere realizar: ");
+  scanf("%[^\n]*",s);
+  int i=0;
+  evaluar_expresion(s);
+  char* c=(char*)malloc(sizeof(char)*128);
+    while(s[i]!='\0'){
+       sprintf(c,"%c",s[i]);
+        if(esOperador(s[i])){
+            apilar(&pOperadores,c);
+        }
+        else{
+            if(s[i]=='('){
+                apilar(&pOperandos,c);
+            }
+            else{
+                if(s[i]==')'){
+                    calcular(&pOperandos,operandos,desapilar(&pOperadores));
+                }
+                else{
+                    if(esNumero(s[i])){
+                        int j=0;
+                        char* numero=(char*)malloc(sizeof(char)*10);
+                        while(esNumero(s[i])){
+                            numero[j]=s[i];
+                            j++;
+                            i++;
+                        }
+                        i--;
+                    apilar(&pOperandos,numero);
+                    free(numero);
+                    }
+                }
+            }
+        }
+        i++;
+    }//Fin while
+    if(pila_vacia(pOperadores)){//si la pila de operadores está vacia
+        char* resul=desapilar(&pOperandos);
+           if(pila_vacia(pOperandos))//Resultado Correcto
+                printf(" El resultado es: %s",resul);
     }
-  else {
-         printf("Expresión mal formada");
-         exit(EXP_MALF);
-       }
-  return 0;*/
+    free(s);
+    free(c);
+
+}
+
+/**
+ * Recibe una lista de operandos, una pila de operadores y una pila de operandos.
+ * Aplica la operación aritmetica de acuerdo al operador que se encuentra en el
+ * tope de la pila, a los operandos que contiene la lista.
+ * @param pOperandos: Puntero a la pila que contiene los operandos.
+ * @param operandos: Puntero a la lista que contiene los operandos a utilizar.
+ * @param operador: Puntero a la pila que contiene operadores.
+ */
+void calcular(pila_t* pOperandos,lista_t operandos,char* operador){
+    int aux=pila_vacia(*pOperandos);
+    if(aux!=1){
+        while(strcmp(tope(*pOperandos),"(")!=0){
+            lista_adjuntar(operandos,atoi(desapilar(pOperandos)));
+        }
+     }
+     desapilar(pOperandos);
+     if(strcmp(operador,"+")==0){
+        char* aux2=(char*)malloc(sizeof(char));
+        int res=suma(operandos);
+        sprintf(aux2,"%d",res);
+        apilar(pOperandos,aux2);
+        free(aux2);
+    }
+    else{
+         if(strcmp(operador,"-")==0){
+            char* aux2=(char*)malloc(sizeof(char));
+            int res=resta(operandos);
+            sprintf(aux2,"%d",res);
+            apilar(pOperandos,aux2);
+            free(aux2);
+         }
+         else{
+             if(strcmp(operador,"*")==0){
+             char* aux2=(char*)malloc(sizeof(char));
+            int res=producto(operandos);
+            sprintf(aux2,"%d",res);
+                apilar(pOperandos, aux2);
+                free(aux2);
+             }
+
+             else{
+                 if(strcmp(operador,"/")==0){
+                 char* aux2=(char*)malloc(sizeof(char));
+                int res=division(operandos);
+                sprintf(aux2,"%d",res);
+                    apilar(pOperandos, aux2);
+                    free(aux2);
+                 }
+
+            }
+         }
+    }
+
+    }
+
+/**
+ * Evalua si la expresion str es correcta.Una expresion se considera falsa si:
+ * a) tiene parentesis mal balanceados, esto es, si la cantidad de "(" no coincide
+ * con la cantidad de ")".
+ * b) contiene algun caracter distinto de "(,),+,*,/,-,0,1,2,3,4,5,6,7,8,9"
+ * @param str: expresión a evaluar.
+ * @return OPRD_INV: Si contiene algun operador inválido.
+ * @return EXP_MALF: Si los paréntesis están mal balanceados o si la expresion no comienza con "(".
+ * @return 0: Si la expresión es válida.
+ */
+int evaluar_expresion(char* str){
+    int cantParentesis=0;
+    int i=0;
+    if(str[0]=='('){
+      while(str[i]!='\0'){
+            if((!esNumero(str[i])) && (!esOperador(str[i])) && (str[i]!='(') && (str[i]!=')') && (str[i]!=' ')){
+                printf("%s","ERROR: Operador Inválido");
+                exit(OPRD_INV);
+                }
+            else
+                if(str[i]=='(')
+                        cantParentesis++;
+                else
+                    if(str[i]==')')
+                        cantParentesis--;
+        i++;
+
+        }
+
+      if(cantParentesis!=0){
+            printf("%s","Error: Parentesis mal balanceados");
+            exit(EXP_MALF);
+            }
+      }
+      else{ //Si la expresion no comienza con "(".
+           printf("%s","Error: La expresión debe comenzar con un paréntesis abierto '('");
+           exit(EXP_MALF);
+           }
+    return (0);
+}
+
+void error(char* e){
+    printf("%s\n", e);
+    exit(1);
+}
+
+/** Main **/
+
+int main( const int argc, const char* argv[] ) {
+/*
+	switch ( argc ) {
+    case 1:
+        printf( "%s", help );
+        break;
+    case 2:
+        if ( strcmp( argv[ 1 ], "-h" ) ) {
+            evaluar( argv[ 1 ] );
+        } else {
+            printf( "%s", help );
+        }
+        break;
+    case 3:
+        if ( strcmp( argv[ 1 ], "-h" ) ) {
+            error( "Formato erroneo.\n" );
+            exit( 1 );
+        } else {
+            printf( "%s", help );
+            evaluar( argv[ 2 ]);
+        }
+        break;
+	default:
+	    error( "Demasiados argumentos.\n" );
+	    break;
+	}
+      */
+    evaluar();
+    return ( 0 );
 }

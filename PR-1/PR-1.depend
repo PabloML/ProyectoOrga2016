@@ -30,3 +30,53 @@
 	<stdio.h>
 	<stdlib.h>
 
+1476141175 source:/home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/evaluar.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pila.h"
+	"lista.h"
+
+1476112896 /home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/pila.h
+
+1476112896 /home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/lista.h
+
+1476139897 source:/home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/lista.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
+1476112896 source:/home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/lista.h
+
+1476141104 source:/home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/pila.c
+	"pila.h"
+	<stdio.h>
+	<stdlib.h>
+
+1476112896 source:/home/alumno/Escritorio/ProyectoOrga2016-master/PR-1/pila.h
+
+1476156216 source:/home/alumno/Escritorio/finish/PR-1/evaluar.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pila.h"
+	"lista.h"
+
+1476112896 /home/alumno/Escritorio/finish/PR-1/pila.h
+
+1476112896 /home/alumno/Escritorio/finish/PR-1/lista.h
+
+1476147973 source:/home/alumno/Escritorio/finish/PR-1/lista.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
+1476112896 source:/home/alumno/Escritorio/finish/PR-1/lista.h
+
+1476141104 source:/home/alumno/Escritorio/finish/PR-1/pila.c
+	"pila.h"
+	<stdio.h>
+	<stdlib.h>
+
+1476112896 source:/home/alumno/Escritorio/finish/PR-1/pila.h
+

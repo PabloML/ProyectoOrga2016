@@ -46,9 +46,6 @@
 		<Unit filename="pila.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="testerLista.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
