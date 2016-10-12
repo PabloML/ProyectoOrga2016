@@ -69,9 +69,10 @@ const char* help = "\nEvaluar 1.0\n"
   printf("Ingrese la operacion que quiere realizar: ");
   scanf("%[^\n]*",s);
   int i=0;
-  validar_expresion(s);
+  int sigue=validar_expresion(s);//sigue el algoritmo si la expresion es válida
+   if(sigue!=1){
     while(s[i]!='\0'){
-       char* c=(char*)malloc(sizeof(char)*128);
+       char* c=(char*)malloc(sizeof(char)*32);
        sprintf(c,"%c",s[i]);
         if(esOperador(s[i])){
             apilar(&pOperadores,c);
@@ -109,12 +110,15 @@ const char* help = "\nEvaluar 1.0\n"
         i++;
 
     }//Fin while
+
     if(pila_vacia(pOperadores)){//si la pila de operadores está vacia
         char* resul=desapilar(&pOperandos);
            if(pila_vacia(pOperandos))//Resultado Correcto
                 printf(" El resultado es: %s",resul);
     }
-    free(s);
+  }//Fin del primer if.
+  else
+      printf("El resultado es: %s",s);
 }
 
 /**
@@ -243,63 +247,6 @@ int esOperador(char c){
 }
 
 /**
- * MEOTODO AUXILIAR OJO!!!
- */
-
-void evaluar(){
- char* s;
-  s=(char*)malloc(sizeof(char)*256);
-  pila_t pOperadores=pila_crear();
-  pila_t pOperandos=pila_crear();
-  lista_t operandos=lista_crear();
-
-  printf("Ingrese la operacion que quiere realizar: ");
-  scanf("%[^\n]*",s);
-  int i=0;
-  evaluar_expresion(s);
-  char* c=(char*)malloc(sizeof(char)*128);
-    while(s[i]!='\0'){
-       sprintf(c,"%c",s[i]);
-        if(esOperador(s[i])){
-            apilar(&pOperadores,c);
-        }
-        else{
-            if(s[i]=='('){
-                apilar(&pOperandos,c);
-            }
-            else{
-                if(s[i]==')'){
-                    calcular(&pOperandos,operandos,desapilar(&pOperadores));
-                }
-                else{
-                    if(esNumero(s[i])){
-                        int j=0;
-                        char* numero=(char*)malloc(sizeof(char)*10);
-                        while(esNumero(s[i])){
-                            numero[j]=s[i];
-                            j++;
-                            i++;
-                        }
-                        i--;
-                    apilar(&pOperandos,numero);
-                   // free(numero);
-                    }
-                }
-            }
-        }
-        i++;
-    }//Fin while
-    if(pila_vacia(pOperadores)){//si la pila de operadores está vacia
-        char* resul=desapilar(&pOperandos);
-           if(pila_vacia(pOperandos))//Resultado Correcto
-                printf(" El resultado es: %s",resul);
-    }
-    //free(s);
-    //free(c);
-
-}
-
-/**
  * Recibe una lista de operandos, una pila de operadores y una pila de operandos.
  * Aplica la operación aritmetica de acuerdo al operador que se encuentra en el
  * tope de la pila, a los operandos que contiene la lista.
@@ -354,6 +301,19 @@ void calcular(pila_t* pila_operandos,lista_t lista_operandos,char* operador){
 
     }
 }
+/** Retorna VERDADERO (1) si la expresion pasada por parámetro corresponde a un solo numero entero natural,
+  * retorna FALSO (0) en caso contrario.
+  */
+
+int es_solo_numero(char* expresion){
+ int i=0;
+ int es_num=1;
+   while((expresion[i]!='\0')&&(es_num)){
+        es_num=(esNumero(expresion[i]));
+        i++;
+    }
+    return es_num;
+}
 
 /**
  * Evalua si la expresion str es correcta.Una expresion se considera falsa si:
@@ -368,8 +328,12 @@ void calcular(pila_t* pila_operandos,lista_t lista_operandos,char* operador){
 int validar_expresion(char* str){
     int cantParentesis=0;
     int i=0;
-    if(str[0]=='('){
-      while(str[i]!='\0'){
+    if(es_solo_numero(str)){
+                return 1;
+                }
+    else
+        if(str[0]=='('){
+           while(str[i]!='\0'){
             if((!esNumero(str[i])) && (!esOperador(str[i])) && (str[i]!='(') && (str[i]!=')') && (str[i]!=' ')){
                 printf("%s","ERROR: Operador Inválido");
                 exit(OPRD_INV);
